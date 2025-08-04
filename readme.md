@@ -5,9 +5,14 @@ The first project to study machine learning is the classification of objects in 
 ## 💡 Idea
 The user uploads a photo, the system classifies the object (dog/cat/car/...) and draws it on top of the bounding box, outputs JSON with coordinates.
 
-## 🛠️ Technology and skills:
+## ⚙️ Technology stack:
+- **Backend**  
+  • Python 3.12  
+  • Deep Learning - PyTorch  
+  • FastAPI  
 
-- **Deep Learning** - PyTorch
-- **Backend** - FastAPI
-- **Frontend** - HTML5 + CSS + JavaScript (drag-n-drop)
-- **CI/CD** - GitHub Actions → Docker Hub → Kubernetes
+- **Frontend**  
+  • HTML5 + CSS + JavaScript  
+
+- **Infrastructure**  
+  • Docker  
