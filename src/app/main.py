@@ -44,7 +44,7 @@ async def upload_image(request: Request, image: UploadFile = File(...)):
 
     file_ext = image.filename.split(".")[-1] # type: ignore
     filename = f"{uuid.uuid4()}.{file_ext}"
-    input_path = os.path.join(UPLOADS_DIR, filename)
+    input_path = os.path.join(BASE_DIR / UPLOADS_DIR, filename)
 
     # Saving the original
     with open(input_path, "wb") as buffer:
@@ -59,5 +59,5 @@ async def upload_image(request: Request, image: UploadFile = File(...)):
 
     # Returning the processed image
     return templates.TemplateResponse(
-        "index.html", {"request": request, "processed_image": processed_url}
+        "processed_image.html", {"request": request, "processed_image": processed_url}
     )
