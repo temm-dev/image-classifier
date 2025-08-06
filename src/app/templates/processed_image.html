@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='/processed_image.css') }}">
+
+    <!-- <link rel="stylesheet" href="../static/processed_image.css"> -->
+    <title>Image Classifier</title>
+</head>
+<body>
+    <header>
+        <div class="header__container">
+            <a class="container__main-title" href="/">Image Classifier</a>
+        </div>
+
+        <nav class="container_hrefs">
+            <ul class="hrefs__list">
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="head">
+            <h2 class="head__title">Objects</h2>
+        </div>
+
+        <div class="description">
+            <h2 class="description__text">Using AI to find different types of objects in an image</h2>
+        </div>
+
+
+        <section class="output">
+
+            {% if processed_image %}
+            <img class="output-section__processed_image" src="{{ processed_image }}" alt="Processed Image">
+            <p class="download"><a href="{{ processed_image }}">Download</a></p>
+            {% endif %}
+
+        </section>
+</body>
+</html>
