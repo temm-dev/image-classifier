@@ -1,0 +1,254 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a:link {
+    color: #000;
+    text-decoration: none;
+}
+
+
+a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+header {
+    width: 100vw;
+    height: 15vh;
+
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.header__container {
+    width: 30vw;
+    height: inherit;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container__main-title:link {
+    padding: 20px;
+    box-sizing: border-box;
+
+    background-color: #000;
+    border-radius: 5px;
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 36px;
+    color: #fff;
+}
+
+.container__main-title:visited {
+    color: #fff;
+}
+
+
+.container_hrefs {
+    width: 45vw;
+    height: inherit;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hrefs__list {
+    padding: 20px;
+    box-sizing: border-box;
+
+    border-radius: 5px;
+
+    display: flex;
+    gap: 35px;
+}
+
+.hrefs__list-item {
+    list-style-type: none;
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+main {
+    width: 100vw;
+    height: 75vh;
+
+    box-sizing: border-box;
+
+    padding-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head__title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 36px;
+    color: #000;
+}
+
+.description {
+    width: 100vw;
+
+    padding-top: 2.9vh;
+
+    display: flex;
+    justify-content: center;
+}
+
+.description__text {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.form {
+    padding-top: 35px;
+}
+
+.form__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    padding: 30px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.upload-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 450px;
+    height: 200px;
+    border: 2px dashed #d1d5db;
+    border-radius: 10px;
+    background-color: #f9fafb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 20px;
+    text-align: center;
+}
+
+.upload-area:hover, .upload-area.dragover {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.upload-icon {
+    width: 50px;
+    height: 50px;
+    fill: #9ca3af;
+    margin-bottom: 15px;
+    transition: fill 0.3s ease;
+}
+
+.upload-area:hover .upload-icon, .upload-area.dragover .upload-icon {
+    fill: #3b82f6;
+}
+
+.upload-text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4b5563;
+    margin-bottom: 5px;
+}
+
+.upload-subtext {
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.form__input-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.preview-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.preview-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: #ef4444;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.preview-remove:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+.form__submit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 30px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px #3b82f64d;
+}
+
+.form__submit:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px #3b82f666;
+}
+
+.form__submit:active {
+    transform: translateY(0);
+}
+
+.submit-icon {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}

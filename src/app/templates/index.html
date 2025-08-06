@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/index.css') }}">
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
+
+    <!-- <link rel="stylesheet" href="../static/index.css">
+    <script src="../static/script.js"></script> -->
     <title>Image Classifier</title>
 </head>
 <body>
     <header>
         <div class="header__container">
-            <h1 class="container__main-title">Image Classifier</h1>
+            <a class="container__main-title" href="/">Image Classifier</a>
         </div>
 
         <nav class="container_hrefs">
@@ -24,29 +28,37 @@
     </header>
 
     <main>
-        <section class="main__output-section">
-            <div class="output-section__head">
-                <h2 class="output-section__head-title">Result</h2>
+
+        <div class="head">
+            <h2 class="head__title">Objects</h2>
+        </div>
+
+        <div class="description">
+            <h2 class="description__text">Using AI to find different types of objects in an image</h2>
+        </div>
+
+        <form class="form" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form__container">
+                <div class="upload-area" id="upload-area">
+                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                    </svg>
+                    <p class="upload-text">Drag the image here or click to select it</p>
+                    <p class="upload-subtext">Supported formats: JPG, PNG, WEBP</p>
+                    <input class="form__input-image" type="file" name="image" accept="image/*" required>
+                </div>
+                <div class="preview-container" id="preview-container" style="display: none;">
+                    <img id="image-preview" class="image-preview" src="" alt="Предпросмотр">
+                    <button type="button" class="preview-remove" id="preview-remove">×</button>
+                </div>
+                <button class="form__submit" type="submit">
+                    <span>Analyze the image</span>
+                    <svg class="submit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    </svg>
+                </button>
             </div>
-
-            {% if processed_image %}
-            <img class="output-section__processed_image" src="{{ processed_image }}" alt="Processed Image">
-            <p>Download: <a href="{{ processed_image }}">processed image</a></p>
-            {% endif %}
-        </section>
-
-        <section class="main__input-section">
-            <div class="input-section__head">
-                <h2 class="input-section__head-title">Input</h2>
-            </div>
-
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" required>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
+        </form>
     </main>
-
-    <footer></footer>
 </body>
 </html>
