@@ -1,9 +1,11 @@
 import torch
-from torchvision import transforms as T
-from torchvision.models.detection import maskrcnn_resnet50_fpn
-from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2
-from torchvision.models._meta import _COCO_CATEGORIES
 from PIL import Image, ImageDraw, ImageFont
+from torchvision import transforms as T
+from torchvision.models._meta import _COCO_CATEGORIES
+from torchvision.models.detection import (
+    fasterrcnn_resnet50_fpn_v2,
+    maskrcnn_resnet50_fpn,
+)
 
 
 class ImageClassifier:
@@ -13,21 +15,21 @@ class ImageClassifier:
         """Initializing dependencies"""
         self.model = fasterrcnn_resnet50_fpn_v2(pretrained=True)
         self.model.eval()
-        self.transform = T.Compose([ T.ToTensor() ])
-    
+        self.transform = T.Compose([T.ToTensor()])
+
     def _classifying_objects_process(self, img_tensor) -> dict:
         """A method for classifying objects in an image"""
         with torch.no_grad():
             outputs = self.model([img_tensor])
             output = outputs[0]
-        
+
         return output
 
     @staticmethod
     def _image_processing(image, output, output_filename) -> None:
         """A method for creating an image with found objects"""
         draw = ImageDraw.Draw(image)
-        boxes  = output["boxes"].cpu()
+        boxes = output["boxes"].cpu()
         scores = output["scores"].cpu()
         labels = output["labels"].cpu()
 
@@ -41,7 +43,7 @@ class ImageClassifier:
             draw.rectangle([x1, y1, x2, y2], outline="blue", width=2)
 
             caption = f"{_COCO_CATEGORIES[label.item()]} {score:.2f}"
-            draw.text((x1, y1-30), caption, fill="white", font=font)
+            draw.text((x1, y1 - 30), caption, fill="white", font=font)
 
         image.save(output_filename)
 
@@ -53,6 +55,3 @@ class ImageClassifier:
         output = self._classifying_objects_process(img_tensor)
 
         self._image_processing(img, output, output_filename)
-
-
-ImageClassifier().classification_process("../../assets/street.jpg", "../../assets/street_out.jpg")
