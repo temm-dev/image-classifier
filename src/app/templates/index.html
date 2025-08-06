@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <title>Image Classifier</title>
 </head>
 <body>
-    
+    <header>
+        <div class="header__container">
+            <h1 class="container__main-title">Image Classifier</h1>
+        </div>
+
+        <nav class="container_hrefs">
+            <ul class="hrefs__list">
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+                <li class="hrefs__list-item"><a href="#">example</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="main__output-section">
+            <div class="output-section__head">
+                <h2 class="output-section__head-title">Result</h2>
+            </div>
+
+            {% if processed_image %}
+            <img class="output-section__processed_image" src="{{ processed_image }}" alt="Processed Image">
+            <p>Download: <a href="{{ processed_image }}">processed image</a></p>
+            {% endif %}
+        </section>
+
+        <section class="main__input-section">
+            <div class="input-section__head">
+                <h2 class="input-section__head-title">Input</h2>
+            </div>
+
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer></footer>
 </body>
 </html>
