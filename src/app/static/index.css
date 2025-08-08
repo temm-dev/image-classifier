@@ -75,6 +75,13 @@ header {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.selected-service {
+    padding-bottom: 3px;
+    border-bottom: 1.5px solid #000;
+
+    font-weight: 700;
+}
+
 main {
     width: 100vw;
     height: 75vh;
@@ -142,7 +149,8 @@ main {
     text-align: center;
 }
 
-.upload-area:hover, .upload-area.dragover {
+.upload-area:hover,
+.upload-area.dragover {
     border-color: #3b82f6;
     background-color: #eff6ff;
 }
@@ -155,7 +163,8 @@ main {
     transition: fill 0.3s ease;
 }
 
-.upload-area:hover .upload-icon, .upload-area.dragover .upload-icon {
+.upload-area:hover .upload-icon,
+.upload-area.dragover .upload-icon {
     fill: #3b82f6;
 }
 

@@ -1,4 +1,3 @@
-// JavaScript для интерактивности
 document.addEventListener('DOMContentLoaded', function() {
     const uploadArea = document.getElementById('upload-area');
     const fileInput = document.querySelector('.form__input-image');
@@ -6,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const imagePreview = document.getElementById('image-preview');
     const previewRemove = document.getElementById('preview-remove');
     
-    // Обработка перетаскивания файлов
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
         uploadArea.classList.add('dragover');
@@ -26,20 +24,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Обработка выбора файла
     fileInput.addEventListener('change', (e) => {
         if (e.target.files.length) {
             handleFileSelection(e.target.files[0]);
         }
     });
     
-    // Удаление превью
     previewRemove.addEventListener('click', () => {
         previewContainer.style.display = 'none';
         fileInput.value = '';
     });
     
-    // Функция обработки выбранного файла
     function handleFileSelection(file) {
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();

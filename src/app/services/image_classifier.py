@@ -1,10 +1,8 @@
-import torch
 from PIL import Image, ImageDraw, ImageFont
 from torchvision import transforms as T
 from torchvision.models._meta import _COCO_CATEGORIES
 from torchvision.models.detection import (
-    fasterrcnn_resnet50_fpn_v2,
-    maskrcnn_resnet50_fpn,
+    fasterrcnn_resnet50_fpn_v2
 )
 
 
@@ -19,9 +17,8 @@ class ImageClassifier:
 
     def _classifying_objects_process(self, img_tensor) -> dict:
         """A method for classifying objects in an image"""
-        with torch.no_grad():
-            outputs = self.model([img_tensor])
-            output = outputs[0]
+        outputs = self.model([img_tensor])
+        output = outputs[0]
 
         return output
 
