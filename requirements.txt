@@ -1,0 +1,6 @@
+torch
+torchvision
+fastapi[standard]
+uvicorn[standard]
+black
+isort
