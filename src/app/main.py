@@ -53,3 +53,11 @@ async def upload_image(request: Request, image: UploadFile = File(...)):
     return templates.TemplateResponse(
         "processed_image.html", {"request": request, "processed_image": processed_url}
     )
+
+
+@app.post("/api/upload")
+async def api_upload_image(request: Request, image: UploadFile = File(...)):
+    """Processing of the uploaded image (endpoint API)"""
+    processed_url = await process_uploaded_image(image)
+
+    return {"status": "success", "processed_image": processed_url}
