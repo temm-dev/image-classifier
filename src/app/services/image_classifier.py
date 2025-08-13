@@ -1,9 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from torchvision import transforms as T
 from torchvision.models._meta import _COCO_CATEGORIES
-from torchvision.models.detection import (
-    fasterrcnn_resnet50_fpn_v2
-)
+from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2
 
 
 class ImageClassifier:
