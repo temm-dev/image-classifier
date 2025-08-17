@@ -21,8 +21,10 @@ class ImageClassifier:
         return output
 
     @staticmethod
-    def _image_processing(image, output, output_filename) -> None:
+    def _image_processing(image, output, output_filename) -> list[dict[str, list]]:
         """A method for creating an image with found objects"""
+        list_found_objects = []
+
         draw = ImageDraw.Draw(image)
         boxes = output["boxes"].cpu()
         scores = output["scores"].cpu()
@@ -34,7 +36,20 @@ class ImageClassifier:
             if score < 0.7:
                 continue
 
+            list_found_objects.append(
+                {
+                    _COCO_CATEGORIES[label.item()]: [
+                        {"score": score.item()},
+                        {"box": box.tolist()},
+                    ]
+                }
+            )
+
             x1, y1, x2, y2 = box.tolist()
+            print(
+                f"Found {_COCO_CATEGORIES[label.item()]} with confidence {score:.2f} at [{x1}, {y1}, {x2}, {y2}]"
+            )
+
             draw.rectangle([x1, y1, x2, y2], outline="blue", width=2)
 
             caption = f"{_COCO_CATEGORIES[label.item()]} {score:.2f}"
@@ -42,11 +57,17 @@ class ImageClassifier:
 
         image.save(output_filename)
 
-    def classification_process(self, path_to_image: str, output_filename: str) -> None:
+        return list_found_objects
+
+    def classification_process(
+        self, path_to_image: str, output_filename: str
+    ) -> list[dict[str, list]]:
         """A method for classifying objects in an image"""
         img = Image.open(path_to_image).convert("RGB")
         img_tensor = self.transform(img)
 
         output = self._classifying_objects_process(img_tensor)
 
-        self._image_processing(img, output, output_filename)
+        list_found_objects = self._image_processing(img, output, output_filename)
+
+        return list_found_objects
