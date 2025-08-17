@@ -68,6 +68,6 @@ async def api_upload_image(request: Request, image: UploadFile = File(...)):
     return {
         "status": "success",
         "processed_image": processed_url,
-        "count objects found": len(list_found_objects),
-        "found_objects": list_found_objects,
+        "count_found_objects": len(list_found_objects),
+        "predictions": list_found_objects
     }

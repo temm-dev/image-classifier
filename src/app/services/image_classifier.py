@@ -36,23 +36,19 @@ class ImageClassifier:
             if score < 0.7:
                 continue
 
+            class_object = _COCO_CATEGORIES[label.item()]
             list_found_objects.append(
-                {
-                    _COCO_CATEGORIES[label.item()]: [
-                        {"score": score.item()},
-                        {"box": box.tolist()},
-                    ]
-                }
+                {"class": class_object, "confidence": score.item(), "box": box.tolist()}
             )
 
             x1, y1, x2, y2 = box.tolist()
-            print(
-                f"Found {_COCO_CATEGORIES[label.item()]} with confidence {score:.2f} at [{x1}, {y1}, {x2}, {y2}]"
-            )
+            # print(
+            #     f"Found {_COCO_CATEGORIES[label.item()]} with confidence {score:.2f} at [{x1}, {y1}, {x2}, {y2}]"
+            # )
 
             draw.rectangle([x1, y1, x2, y2], outline="blue", width=2)
 
-            caption = f"{_COCO_CATEGORIES[label.item()]} {score:.2f}"
+            caption = f"{class_object} {score:.2f}"
             draw.text((x1, y1 - 30), caption, fill="white", font=font)
 
         image.save(output_filename)
