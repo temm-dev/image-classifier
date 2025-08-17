@@ -78,6 +78,49 @@ curl -X 'POST' \
   -F 'image=@path/to/your/image.jpg;type=image/jpeg'
 ```
 
+### Example of a successful response
+
+```json
+{
+  "status": "success",
+  "processed_image": "processed/processed_image.jpeg",
+  "count_found_objects": 3,
+  "predictions": [
+    {
+      "class": "bottle",
+      "confidence": 0.9878395199775696,
+      "box": [
+        261.2372131347656,
+        621.8948364257812,
+        285.1950378417969,
+        690.6560668945312
+      ]
+    },
+    {
+      "class": "chair",
+      "confidence": 0.9857845902442932,
+      "box": [
+        653.7933959960938,
+        753.1644897460938,
+        951.2028198242188,
+        1148.4215087890625
+      ]
+    },
+    {
+      "class": "person",
+      "confidence": 0.9853758215904236,
+      "box": [
+        604.1263427734375,
+        527.564208984375,
+        874.9927978515625,
+        966.6196899414062
+      ]
+    }
+
+  ]
+}
+```
+
 
 <br>
 
