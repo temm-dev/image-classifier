@@ -67,6 +67,18 @@ docker build -t my-image-classifier .
 docker run --name my-classifier -p 8000:8000 -d my-image-classifier
 ```
 
+## 🌐 API Usage
+
+### Request example via `curl`
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/upload' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'image=@path/to/your/image.jpg;type=image/jpeg'
+```
+
+
 <br>
 
 > **Have a nice day!** 🍀
