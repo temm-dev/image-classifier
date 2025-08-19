@@ -69,17 +69,18 @@ docker run --name my-classifier -p 8000:8000 -d my-image-classifier
 
 ## 🌐 API Usage
 
+<details><summary style="font-size: 16px; font-weight: bold;">Detect objects</summary>
+
 ### Request example via `curl`
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/api/upload' \
+  'http://localhost:8000/api/objects/upload' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'image=@path/to/your/image.jpg;type=image/jpeg'
 ```
 
 ### Example of a successful response
-
 ```json
 {
   "status": "success",
@@ -120,8 +121,57 @@ curl -X 'POST' \
   ]
 }
 ```
+</details>
 
+<details><summary style="font-size: 16px; font-weight: bold;">Detect poses</summary>
 
+### Request example via `curl`
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/poses/upload' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'image=@path/to/your/image.jpg;type=image/jpeg'
+```
+
+### Example of a successful response
+```json
+{
+  "status": "success",
+  "processed_image": "processed/processed_image.jpeg",
+  "count_found_poses": 3,
+  "predictions": [
+    {
+      "class": "nose",
+      "confidence": 0.9978139400482178,
+      "position": [
+        815.9758911132812,
+        215.8396759033203
+      ]
+    },
+    {
+      "class": "left_eye",
+      "confidence": 0.9978139400482178,
+      "position": [
+        835.1710815429688,
+        179.88650512695312
+      ]
+    },
+    {
+      "class": "right_eye",
+      "confidence": 0.9978139400482178,
+      "position": [
+        782.3843994140625,
+        203.85528564453125
+      ]
+    }
+  ]
+}
+```
+</details>
+
+<br>
+<br>
 <br>
 
 > **Have a nice day!** 🍀
