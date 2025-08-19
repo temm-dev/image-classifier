@@ -6,9 +6,7 @@ from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from services import ImageClassifier
-
-image_classifier = ImageClassifier()
+from services import *
 
 app = FastAPI()
 
@@ -21,53 +19,105 @@ app.mount(
 )
 
 
-@app.get("/", response_class=HTMLResponse)
-async def home_page(request: Request):
-    """Returning the start page"""
-    return templates.TemplateResponse(
-        "index.html", {"request": request, "current_time": datetime.datetime.now()}
-    )
-
-
-async def process_uploaded_image(image: UploadFile) -> list:
+async def process_uploaded_image(image: UploadFile, type_action) -> list:
     """Processes the uploaded image and returns the URL of the processed file"""
 
     file_ext = image.filename.split(".")[-1]  # type: ignore
     filename = f"{uuid.uuid4()}.{file_ext}"
-    input_path = os.path.join(BASE_DIR / UPLOADS_DIR, filename)
+    image_path = os.path.join(BASE_DIR / UPLOADS_DIR, filename)
 
     # Saving the original image
-    with open(input_path, "wb") as buffer:
+    with open(image_path, "wb") as buffer:
         buffer.write(await image.read())
 
     # Image Processing
     processed_filename = f"processed_{filename}"
     output_path = os.path.join(BASE_DIR / PROCESSED_DIR, processed_filename)
-    list_found_objects = image_classifier.classification_process(
-        input_path, output_path
+
+    if type_action == "objects":
+        list_found = ObjectsClassifier().detect_objects(image_path, output_path)
+    elif type_action == "poses":
+        list_found = PoseClassifier().detect_poses(image_path, output_path)
+
+    return [f"/processed/{processed_filename}", list_found]
+
+
+
+
+@app.get("/", response_class=HTMLResponse)
+async def home_page(request: Request):
+    """Returning the start page"""
+    return templates.TemplateResponse(
+        "objects.html", {"request": request, "current_time": datetime.datetime.now()}
     )
 
-    return [f"processed/{processed_filename}", list_found_objects]
 
 
-@app.post("/upload")
-async def upload_image(request: Request, image: UploadFile = File(...)):
+#|############################################################
+#|#                         OBJECTS                          #
+#|############################################################
+
+@app.get("/objects", response_class=HTMLResponse)
+async def objects_page(request: Request):
+    """Returning the start page"""
+    return templates.TemplateResponse(
+        "objects.html", {"request": request, "current_time": datetime.datetime.now()}
+    )
+
+@app.post("/objects/upload")
+async def objects_upload_image(request: Request, image: UploadFile = File(...)):
     """Processing of the uploaded image (HTML response)"""
-    processed_url = await process_uploaded_image(image)
+    processed_url, list_found = await process_uploaded_image(image, "objects")
+    print(processed_url)
+
+    return templates.TemplateResponse(
+        "processed_image.html",
+        {"request": request, "processed_image": processed_url},
+    )
+
+
+@app.post("/api/objects/upload")
+async def api_objects_upload_image(request: Request, image: UploadFile = File(...)):
+    """Processing of the uploaded image (endpoint API)"""
+    processed_url, list_found = await process_uploaded_image(image, "objects")
+
+    return {
+        "status": "success",
+        "processed_image": processed_url,
+        "count_found_objects": len(list_found),
+        "predictions": list_found
+    }
+
+
+
+#|############################################################
+#|#                          POSES                           #
+#|############################################################
+
+@app.get("/poses", response_class=HTMLResponse)
+async def poses_page(request: Request):
+    """Returning the start page"""
+    return templates.TemplateResponse(
+        "poses.html", {"request": request, "current_time": datetime.datetime.now()}
+    )
+
+@app.post("/poses/upload")
+async def poses_upload_image(request: Request, image: UploadFile = File(...)):
+    """Processing of the uploaded image (HTML response)"""
+    processed_url = await process_uploaded_image(image, "poses")
     return templates.TemplateResponse(
         "processed_image.html",
         {"request": request, "processed_image": processed_url[0]},
     )
 
-
-@app.post("/api/upload")
-async def api_upload_image(request: Request, image: UploadFile = File(...)):
+@app.post("/api/poses/upload")
+async def api_poses_upload_image(request: Request, image: UploadFile = File(...)):
     """Processing of the uploaded image (endpoint API)"""
-    processed_url, list_found_objects = await process_uploaded_image(image)
+    processed_url, list_found = await process_uploaded_image(image, "poses")
 
     return {
         "status": "success",
         "processed_image": processed_url,
-        "count_found_objects": len(list_found_objects),
-        "predictions": list_found_objects
+        "count_found_poses": len(list_found),
+        "predictions": list_found
     }
