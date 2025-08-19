@@ -62,7 +62,7 @@ class PoseClassifier:
         return list_found_body_parts
 
     def detect_poses(self, path_to_image: str, output_path: str) -> list[dict]:
-        """"""
+        """Finding a person's poses and body parts"""
         image = Image.open(path_to_image).convert("RGB")
         img_tensor = self.transform(image)
         predictions = self.model([img_tensor])[0]
