@@ -37,7 +37,7 @@ class PoseClassifier:
         draw = ImageDraw.Draw(image)
         keypoints = predictions["keypoints"]
         scores = predictions["scores"]
-        font = ImageFont.load_default()
+        font = ImageFont.load_default(size=26)
 
 
         for kps, score in zip(keypoints, scores):
@@ -54,7 +54,7 @@ class PoseClassifier:
 
                     list_found_body_parts.append({"class": name, "confidence": score.item(), "position": (x.item(), y.item())})
 
-                    draw.ellipse([(x-5, y-5), (x+5, y+5)], fill=colors.get(ellipse_color, "white"))
+                    draw.ellipse([(x-5, y-5), (x+5, y+5)], fill=colors.get(ellipse_color, "white"), width=3)
                     draw.text(text_position, name, fill="white", font=font)
 
         image.save(output_path)
