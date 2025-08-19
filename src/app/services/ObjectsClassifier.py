@@ -4,7 +4,7 @@ from torchvision.models._meta import _COCO_CATEGORIES
 from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2
 
 
-class ImageClassifier:
+class ObjectsClassifier:
     """A class for working with the classification of objects in an image"""
 
     def __init__(self) -> None:
@@ -13,22 +13,15 @@ class ImageClassifier:
         self.model.eval()
         self.transform = T.Compose([T.ToTensor()])
 
-    def _classifying_objects_process(self, img_tensor) -> dict:
-        """A method for classifying objects in an image"""
-        outputs = self.model([img_tensor])
-        output = outputs[0]
-
-        return output
-
     @staticmethod
-    def _image_processing(image, output, output_filename) -> list[dict[str, list]]:
-        """A method for creating an image with found objects"""
+    def _image_processing(image, predictions, output_path: str) -> list[dict[str, list]]:
+        """Creating an image with found objects"""
         list_found_objects = []
 
         draw = ImageDraw.Draw(image)
-        boxes = output["boxes"].cpu()
-        scores = output["scores"].cpu()
-        labels = output["labels"].cpu()
+        boxes = predictions["boxes"].cpu()
+        scores = predictions["scores"].cpu()
+        labels = predictions["labels"].cpu()
 
         font = ImageFont.load_default(size=16)
 
@@ -51,19 +44,18 @@ class ImageClassifier:
             caption = f"{class_object} {score:.2f}"
             draw.text((x1, y1 - 30), caption, fill="white", font=font)
 
-        image.save(output_filename)
+        image.save(output_path)
 
         return list_found_objects
 
-    def classification_process(
-        self, path_to_image: str, output_filename: str
+    def detect_objects(
+        self, image_path: str, output_path: str
     ) -> list[dict[str, list]]:
-        """A method for classifying objects in an image"""
-        img = Image.open(path_to_image).convert("RGB")
+        """Detecting poses and body parts"""
+        img = Image.open(image_path).convert("RGB")
         img_tensor = self.transform(img)
+        predictions = self.model([img_tensor])[0]
 
-        output = self._classifying_objects_process(img_tensor)
-
-        list_found_objects = self._image_processing(img, output, output_filename)
+        list_found_objects = self._image_processing(img, predictions, output_path)
 
         return list_found_objects
