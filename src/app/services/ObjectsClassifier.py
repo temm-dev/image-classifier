@@ -23,7 +23,7 @@ class ObjectsClassifier:
         scores = predictions["scores"].cpu()
         labels = predictions["labels"].cpu()
 
-        font = ImageFont.load_default(size=16)
+        font = ImageFont.load_default(size=26)
 
         for box, score, label in zip(boxes, scores, labels):
             if score < 0.7:
