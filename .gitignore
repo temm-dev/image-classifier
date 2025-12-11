@@ -1,3 +1,6 @@
 .venv
 __pycache__
-.DB_Store
+.DS_Store
+src/app/processed/
+src/app/uploads/
+src/.DS_Store
