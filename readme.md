@@ -60,3 +60,26 @@ Or build it yourself:
 docker build -t my-image-classifier .
 docker run -p 8000:8000 -d my-image-classifier
 ```
+
+## 🛠️ Technology Stack
+| Component       | Technology |
+|----------------|------------|
+| **Backend**    | Python 3.12, FastAPI, Uvicorn |
+| **ML Framework**| PyTorch, torchvision |
+| **Frontend**   | HTML5, CSS3, Vanilla JS |
+| **Deployment** | Docker |
+| **Package Manager** | Poetry |
+
+## 🤝 Contributing
+Contributions are welcome! If you have ideas for improvements or find bugs:
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
+
+Please ensure your code follows the existing style and includes relevant tests.
+
+## 📄 License
+This project is licensed under the MIT License.
